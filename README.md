@@ -24,7 +24,7 @@ Currently the Agent can look at your screen and give answers related to it.
 
 Perform simple interactions with the system such as launching chrome and performing a search.
 
-Providing summarisation and according to context.
+Providing summarisation according to context.
 
 Write code in your window.
 
