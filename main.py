@@ -66,7 +66,9 @@ def conditions(response:generation_types.GenerateContentResponse):
     #     fc = response.candidates[0].content.parts[1].function_call
     #     print(fc)
 
-    if response_txt.text!="" or re.search('[a-zA-Z]',response_txt.text):
+    print("Response text: ",response_txt)
+    # if response_txt.text!="" or re.search('[a-zA-Z]',response_txt.text):
+    if response_txt!="" and response_txt.text!="":
         print(response_txt.text)
         text_to_voice=""
 
@@ -257,11 +259,11 @@ def get_voice_to_text():
             language="en",  # Optional
             temperature=0.0  # Optional
         )
-        # Print the transcription text
-        global text_to_voice
-        # print(transcription.text.strip())
-        text_to_voice = transcription.text.strip()
-        os.remove("user_input_voice.wav")
+    # Print the transcription text
+    global text_to_voice
+    # print(transcription.text.strip())
+    text_to_voice = transcription.text.strip()
+    os.remove("user_input_voice.wav")
 
 def listen_to_user():
 
@@ -461,42 +463,42 @@ tool_config = tool_config_from_mode("auto")
 # # tool_config = tool_config_from_mode("any", avail_fns)
 
 
-# pa = pyaudio.PyAudio()
-# audio_stream = pa.open(
-#     rate=porcupine.sample_rate,
-#     channels=1,
-#     format=pyaudio.paInt16,
-#     input=True,
-#     frames_per_buffer=porcupine.frame_length
-# )
+pa = pyaudio.PyAudio()
+audio_stream = pa.open(
+    rate=porcupine.sample_rate,
+    channels=1,
+    format=pyaudio.paInt16,
+    input=True,
+    frames_per_buffer=porcupine.frame_length
+)
 
-# print("Listening for the keyword 'Hey Vice'...")
+print("Listening for the keyword 'Hey Vice'...")
 
-# try:
-#     while True:
-#         pcm = audio_stream.read(porcupine.frame_length)
-#         pcm = np.frombuffer(pcm, dtype=np.int16)
+try:
+    while True:
+        pcm = audio_stream.read(porcupine.frame_length)
+        pcm = np.frombuffer(pcm, dtype=np.int16)
 
-#         # Detect the keyword
-#         keyword_index = porcupine.process(pcm)
-#         if keyword_index == 0:
-#             print("Keyword Hey Vice detected!")
-#             play_audio('start_prompt.wav')
-#             listen_to_user()
-#             get_voice_to_text()
-#             response = chat.send_message(text_to_voice, tool_config=tool_config)
-#             conditions(response)
-#             asyncio.run(get_wave())
-#             # convert()
-#             # play_audio('newoutput.wav')
-#             # get_voice()
-#             print("Listening for the keyword 'Hey Vice'...")
-#         elif keyword_index == 1:
-#             print("Exit keyword detected now exiting...")
-#             break
-# finally:
-#     audio_stream.close()
-#     porcupine.delete()
+        # Detect the keyword
+        keyword_index = porcupine.process(pcm)
+        if keyword_index == 0:
+            print("Keyword Hey Vice detected!")
+            play_audio('start_prompt.wav')
+            listen_to_user()
+            get_voice_to_text()
+            response = chat.send_message(text_to_voice, tool_config=tool_config)
+            conditions(response)
+            asyncio.run(get_wave())
+            # convert()
+            # play_audio('newoutput.wav')
+            # get_voice()
+            print("Listening for the keyword 'Hey Vice'...")
+        elif keyword_index == 1:
+            print("Exit keyword detected now exiting...")
+            break
+finally:
+    audio_stream.close()
+    porcupine.delete()
 
 # continue_loop = True
 
@@ -513,16 +515,16 @@ tool_config = tool_config_from_mode("auto")
 #     count+=1
 #     print(count)
 # conditions(response)
-while True:
-    inp = input('Enter you task/Send more message?')
-    if inp=="!EXIT":
-        break
+# while True:
+#     inp = input('Enter you task/Send more message?')
+#     if inp=="!EXIT":
+#         break
 
-    if inp=="":
-        inp = input('Enter you task/Send more message?')
+#     if inp=="":
+#         inp = input('Enter you task/Send more message?')
 
-    response = chat.send_message(inp, tool_config=tool_config)
-    conditions(response)
+#     response = chat.send_message(inp, tool_config=tool_config)
+#     conditions(response)
 #     print(response.candidates[0].content.parts)
 
 

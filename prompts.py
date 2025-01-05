@@ -86,8 +86,9 @@ applist = {
     3:"calc.exe",
     4:"taskmgr.exe",
     5:"notepad.exe"
-},
-then an app corresponding to the key is launched.
+}, this applist provides the corresponding keys to the available applications that can be launched using the launch_app function 
+for example Chrome can be launched by providing launch_app callback a launch_index argument 0 which will then launch chrome similarily 
+you can give launch_index codes available to you in applist to launch any available corresponding app.
 
 The functions list_elements_of_current_window and find_and_click_element will be used in conjuction.
 For example a user wants you to click on a certain link in a chrome browser window, then you can first use the list_elements_of_current_window function callback 
@@ -112,6 +113,8 @@ press_enter argument, if not then use look_at_screen_and_respond to check elemen
 Use look_at_screen_and_respond to check if you are on the results page.
 As all tasks are completed send no function callback to exit.
 Between each task think before you act on what should be your next action.
+
+Return the response text in a form that is easy to pronounce like remove asterisk etc
 
 This example can be taken to consider how you can perform complex actions and execute them via the functions.
 
